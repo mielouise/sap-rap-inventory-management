@@ -6,7 +6,10 @@ CLASS zcl_sp110_create_nr DEFINITION
 
 ENDCLASS.
 
-CLASS zcl_sp110_create_nr IMPLEMENTATION.
+
+
+CLASS ZCL_SP110_CREATE_NR IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 
@@ -84,5 +87,4 @@ CLASS zcl_sp110_create_nr IMPLEMENTATION.
     ENDTRY.
 
   ENDMETHOD.
-
 ENDCLASS.

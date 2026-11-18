@@ -9,7 +9,9 @@ CLASS zcl_spacc110_warehouse_loader DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_spacc110_warehouse_loader IMPLEMENTATION.
+
+CLASS ZCL_SPACC110_WAREHOUSE_LOADER IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 
@@ -42,6 +44,4 @@ CLASS zcl_spacc110_warehouse_loader IMPLEMENTATION.
     ).
 
   ENDMETHOD.
-
 ENDCLASS.
-

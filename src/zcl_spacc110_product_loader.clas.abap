@@ -9,7 +9,9 @@ CLASS zcl_spacc110_product_loader DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_spacc110_product_loader IMPLEMENTATION.
+
+CLASS ZCL_SPACC110_PRODUCT_LOADER IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 
@@ -49,6 +51,4 @@ CLASS zcl_spacc110_product_loader IMPLEMENTATION.
     ).
 
   ENDMETHOD.
-
 ENDCLASS.
-

@@ -5,7 +5,10 @@ CLASS zcl_sp110_check_nr DEFINITION
     INTERFACES if_oo_adt_classrun.
 ENDCLASS.
 
-CLASS zcl_sp110_check_nr IMPLEMENTATION.
+
+
+CLASS ZCL_SP110_CHECK_NR IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 
@@ -27,6 +30,4 @@ CLASS zcl_sp110_check_nr IMPLEMENTATION.
     ENDTRY.
 
   ENDMETHOD.
-
 ENDCLASS.
-

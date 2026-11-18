@@ -9,7 +9,9 @@ CLASS zcl_sp110_ware_nr_init DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_sp110_ware_nr_init IMPLEMENTATION.
+
+CLASS ZCL_SP110_WARE_NR_INIT IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
 
@@ -92,5 +94,4 @@ CLASS zcl_sp110_ware_nr_init IMPLEMENTATION.
     ENDTRY.
 
   ENDMETHOD.
-
 ENDCLASS.
