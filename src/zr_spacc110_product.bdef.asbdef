@@ -18,6 +18,7 @@ etag master LocalLastChangedAt
   validation validateProductName on save
   {
     create;
+    update;
     field ProductName;
   }
 

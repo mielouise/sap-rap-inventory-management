@@ -1,4 +1,4 @@
-CLASS lhc_Product DEFINITION
+CLASS lhc_product DEFINITION
   INHERITING FROM cl_abap_behavior_handler.
 
   PRIVATE SECTION.
@@ -10,47 +10,38 @@ CLASS lhc_Product DEFINITION
 ENDCLASS.
 
 
-CLASS lhc_Product IMPLEMENTATION.
+
+CLASS lhc_product IMPLEMENTATION.
 
   METHOD validateProductName.
 
-    " Læs produkternes navne
-    READ ENTITIES OF ZR_SPACC110_PRODUCT
-      IN LOCAL MODE
+    READ ENTITIES OF ZR_SPACC110_PRODUCT IN LOCAL MODE
       ENTITY Product
       FIELDS ( ProductName )
       WITH CORRESPONDING #( keys )
-      RESULT DATA(lt_products).
+      RESULT DATA(products).
 
-    LOOP AT lt_products ASSIGNING FIELD-SYMBOL(<product>).
+    LOOP AT products INTO DATA(product).
 
-      " Ryd tidligere fejlmeddelelse
-      APPEND VALUE #(
-        %tky        = <product>-%tky
-        %state_area = 'VALIDATE_PRODUCT_NAME'
-      ) TO reported-Product.
+      DATA(lv_name) = product-ProductName.
 
-      " Kontrollér om navnet kun indeholder mellemrum
-      DATA(lv_name) = <product>-ProductName.
-      CONDENSE lv_name NO-GAPS.
+      CONDENSE lv_name.
 
-      IF lv_name IS INITIAL.
+      IF lv_name IS INITIAL
+         OR lv_name NA 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÆØÅæøå'.
 
-        " Afvis gemning
         APPEND VALUE #(
-          %tky = <product>-%tky
-        ) TO failed-Product.
+          %tky = product-%tky
+        ) TO failed-product.
 
-        " Vis fejl i Fiori
         APPEND VALUE #(
-          %tky        = <product>-%tky
-          %state_area = 'VALIDATE_PRODUCT_NAME'
+          %tky = product-%tky
           %msg = new_message_with_text(
             severity = if_abap_behv_message=>severity-error
-            text = 'Product name cannot be empty or contain only spaces.'
+            text     = 'Product name must contain at least one letter.'
           )
           %element-ProductName = if_abap_behv=>mk-on
-        ) TO reported-Product.
+        ) TO reported-product.
 
       ENDIF.
 
@@ -59,6 +50,7 @@ CLASS lhc_Product IMPLEMENTATION.
   ENDMETHOD.
 
 ENDCLASS.
+
 
 
 CLASS lsc_zr_spacc110_product DEFINITION
@@ -71,17 +63,16 @@ CLASS lsc_zr_spacc110_product DEFINITION
 ENDCLASS.
 
 
+
 CLASS lsc_zr_spacc110_product IMPLEMENTATION.
 
   METHOD adjust_numbers.
 
-    " Gennemgå nye produkter
     LOOP AT mapped-Product
       ASSIGNING FIELD-SYMBOL(<product>).
 
       TRY.
 
-          " Hent næste Product ID
           cl_numberrange_runtime=>number_get(
             EXPORTING
               nr_range_nr = '01'
@@ -95,23 +86,19 @@ CLASS lsc_zr_spacc110_product IMPLEMENTATION.
 
         CATCH cx_number_ranges INTO DATA(lx_error).
 
-          " Kritisk fejl under RAP save-sekvensen
           RAISE SHORTDUMP lx_error.
 
       ENDTRY.
 
-      " Kontrollér resultatet
       ASSERT lv_quantity = 1.
       ASSERT lv_number IS NOT INITIAL.
+      ASSERT lv_returncode = space.
 
-      ASSERT lv_returncode <> '2'
-         AND lv_returncode <> '3'.
+      ASSERT CONV decfloat34( lv_number )
+             <= 2147483647.
 
-      ASSERT CONV decfloat34( lv_number ) > 0.
-      ASSERT CONV decfloat34( lv_number ) <= 2147483647.
-
-      " Tildel endeligt Product ID
-      <product>-%key-ProductId = CONV i( lv_number ).
+      <product>-%key-ProductId =
+        CONV i( lv_number ).
 
     ENDLOOP.
 
