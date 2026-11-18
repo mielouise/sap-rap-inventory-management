@@ -50,5 +50,8 @@ define root view entity ZC_SPACC110_PRODUCT
   LocalCreatedAt,
   LocalLastChangedBy,
   LocalLastChangedAt,
-  LastChangedAt
+  LastChangedAt,
+
+  _Inventory
+
 }

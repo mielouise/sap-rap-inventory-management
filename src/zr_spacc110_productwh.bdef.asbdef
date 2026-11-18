@@ -1,0 +1,48 @@
+managed implementation in class zbp_r_spacc110_productwh unique;
+
+strict ( 2 );
+
+define behavior for ZR_SPACC110_PRODUCTWH alias ProductWarehouse
+
+persistent table zspacc110_prodwh
+
+lock master
+
+authorization master ( none )
+
+etag master LastChangedAt
+
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly : update )
+    ProductId,
+    WarehouseId;
+
+  field ( readonly )
+    LocalCreatedBy,
+    LocalCreatedAt,
+    LocalLastChangedBy,
+    LocalLastChangedAt,
+    LastChangedAt;
+
+  mapping for zspacc110_prodwh
+  {
+    ProductId          = product_id;
+    WarehouseId        = warehouse_id;
+
+    StockQuantity      = stock_quantity;
+    MinimumStock       = minimum_stock;
+
+    LocalCreatedBy     = local_created_by;
+    LocalCreatedAt     = local_created_at;
+
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+
+    LastChangedAt      = last_changed_at;
+  }
+
+}

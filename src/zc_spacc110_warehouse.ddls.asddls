@@ -64,5 +64,8 @@ define root view entity ZC_SPACC110_WAREHOUSE
   LocalLastChangedAt,
 
   @UI.hidden: true
-  LastChangedAt
+  LastChangedAt,
+
+  _Inventory
+
 }

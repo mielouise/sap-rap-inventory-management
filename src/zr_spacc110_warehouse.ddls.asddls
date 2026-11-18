@@ -4,13 +4,20 @@
 
 define root view entity ZR_SPACC110_WAREHOUSE
   as select from zspacc110_ware as Warehouse
-{
-  key Warehouse.warehouse_id as WarehouseId,
 
-      Warehouse.warehouse_name as WarehouseName,
-      Warehouse.street_address as StreetAddress,
-      Warehouse.city as City,
-      Warehouse.postal_code as PostalCode,
+  association [0..*] to ZR_SPACC110_PRODUCTWH as _Inventory
+    on $projection.WarehouseId = _Inventory.WarehouseId
+
+{
+  key Warehouse.warehouse_id      as WarehouseId,
+
+      Warehouse.warehouse_name    as WarehouseName,
+
+      Warehouse.street_address    as StreetAddress,
+
+      Warehouse.city              as City,
+
+      Warehouse.postal_code       as PostalCode,
 
       @Semantics.user.createdBy: true
       Warehouse.local_created_by as LocalCreatedBy,
@@ -25,5 +32,7 @@ define root view entity ZR_SPACC110_WAREHOUSE
       Warehouse.local_last_changed_at as LocalLastChangedAt,
 
       @Semantics.systemDateTime.lastChangedAt: true
-      Warehouse.last_changed_at as LastChangedAt
+      Warehouse.last_changed_at as LastChangedAt,
+
+      _Inventory
 }

@@ -6,7 +6,9 @@
 "ZSPACC110_PRODUC"
 ],
 "ASSOCIATED":
-[],
+[
+"ZR_SPACC110_PRODUCTWH"
+],
 "BASE":
 [],
 "ANNO_REF":
