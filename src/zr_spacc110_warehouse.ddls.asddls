@@ -5,9 +5,6 @@
 define root view entity ZR_SPACC110_WAREHOUSE
   as select from zspacc110_ware as Warehouse
 
-  association [0..*] to ZR_SPACC110_PRODUCTWH as _Inventory
-    on $projection.WarehouseId = _Inventory.WarehouseId
-
 {
   key Warehouse.warehouse_id      as WarehouseId,
 
@@ -32,7 +29,5 @@ define root view entity ZR_SPACC110_WAREHOUSE
       Warehouse.local_last_changed_at as LocalLastChangedAt,
 
       @Semantics.systemDateTime.lastChangedAt: true
-      Warehouse.last_changed_at as LastChangedAt,
-
-      _Inventory
+      Warehouse.last_changed_at as LastChangedAt
 }

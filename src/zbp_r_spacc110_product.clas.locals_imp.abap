@@ -1,3 +1,4 @@
+
 CLASS lhc_product DEFINITION
   INHERITING FROM cl_abap_behavior_handler.
 
@@ -8,7 +9,6 @@ CLASS lhc_product DEFINITION
       IMPORTING keys FOR Product~validateProductName.
 
 ENDCLASS.
-
 
 
 CLASS lhc_product IMPLEMENTATION.
@@ -38,7 +38,7 @@ CLASS lhc_product IMPLEMENTATION.
           %tky = product-%tky
           %msg = new_message_with_text(
             severity = if_abap_behv_message=>severity-error
-            text     = 'Product name must contain at least one letter.'
+            text = 'Product name must contain at least one letter.'
           )
           %element-ProductName = if_abap_behv=>mk-on
         ) TO reported-product.
@@ -52,7 +52,6 @@ CLASS lhc_product IMPLEMENTATION.
 ENDCLASS.
 
 
-
 CLASS lsc_zr_spacc110_product DEFINITION
   INHERITING FROM cl_abap_behavior_saver.
 
@@ -61,7 +60,6 @@ CLASS lsc_zr_spacc110_product DEFINITION
     METHODS adjust_numbers REDEFINITION.
 
 ENDCLASS.
-
 
 
 CLASS lsc_zr_spacc110_product IMPLEMENTATION.
@@ -85,23 +83,23 @@ CLASS lsc_zr_spacc110_product IMPLEMENTATION.
           ).
 
         CATCH cx_number_ranges INTO DATA(lx_error).
-
           RAISE SHORTDUMP lx_error.
 
       ENDTRY.
 
       ASSERT lv_quantity = 1.
       ASSERT lv_number IS NOT INITIAL.
-      ASSERT lv_returncode = space.
+      ASSERT lv_returncode <> '2'
+         AND lv_returncode <> '3'.
 
-      ASSERT CONV decfloat34( lv_number )
-             <= 2147483647.
+      ASSERT CONV decfloat34( lv_number ) > 0.
+      ASSERT CONV decfloat34( lv_number ) <= 2147483647.
 
-      <product>-%key-ProductId =
-        CONV i( lv_number ).
+      <product>-%key-ProductId = CONV i( lv_number ).
 
     ENDLOOP.
 
   ENDMETHOD.
 
 ENDCLASS.
+

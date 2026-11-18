@@ -1,4 +1,5 @@
 @EndUserText.label: 'Product Management Service'
 define service ZSD_SPACC110_PRODUCT {
-  expose ZC_SPACC110_PRODUCT as Products;
+  expose ZC_SPACC110_PRODUCT   as Products;
+  expose ZC_SPACC110_WAREHOUSE as Warehouses;
 }

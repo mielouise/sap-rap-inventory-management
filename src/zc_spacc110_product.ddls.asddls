@@ -16,15 +16,6 @@ define root view entity ZC_SPACC110_PRODUCT
   provider contract transactional_query
   as projection on ZR_SPACC110_PRODUCT
 {
-  @UI.facet: [
-    {
-      id: 'ProductDetails',
-      purpose: #STANDARD,
-      type: #IDENTIFICATION_REFERENCE,
-      label: 'Product Details',
-      position: 10
-    }
-  ]
 
   @EndUserText.label: 'Product ID'
   @UI.lineItem: [{ position: 10 }]
@@ -50,8 +41,5 @@ define root view entity ZC_SPACC110_PRODUCT
   LocalCreatedAt,
   LocalLastChangedBy,
   LocalLastChangedAt,
-  LastChangedAt,
-
-  _Inventory
-
+  LastChangedAt
 }
