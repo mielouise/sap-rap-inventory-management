@@ -15,6 +15,10 @@ CLASS lhc_Stock DEFINITION
       FOR PRECHECK
       IMPORTING entities FOR CREATE Stock.
 
+    METHODS setDefaultAmount
+      FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR Stock~setDefaultAmount.
+
 ENDCLASS.
 
 
@@ -143,5 +147,30 @@ CLASS lhc_Stock IMPLEMENTATION.
     ENDLOOP.
 
   ENDMETHOD.
+
+  METHOD setDefaultAmount.
+
+  READ ENTITIES OF zr_spacc110_stock IN LOCAL MODE
+    ENTITY Stock
+    FIELDS ( Amount )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_stock).
+
+  DELETE lt_stock WHERE Amount IS NOT INITIAL.
+
+  CHECK lt_stock IS NOT INITIAL.
+
+  MODIFY ENTITIES OF zr_spacc110_stock IN LOCAL MODE
+    ENTITY Stock
+    UPDATE FIELDS ( Amount )
+    WITH VALUE #(
+      FOR ls_stock IN lt_stock
+      (
+        %tky   = ls_stock-%tky
+        Amount = 0
+      )
+    ).
+
+ENDMETHOD.
 
 ENDCLASS.
