@@ -1,0 +1,20 @@
+managed implementation in class zbp_r_spacc110_category unique;
+strict ( 2 );
+
+define behavior for ZR_SPACC110_CATEGORY alias Category
+persistent table zspacc110_categ
+lock master
+authorization master ( none )
+{
+  create;
+  update;
+
+  field ( mandatory : create, readonly : update ) CategoryId;
+  field ( mandatory ) CategoryName;
+
+  mapping for zspacc110_categ
+  {
+    CategoryId   = category_id;
+    CategoryName = category_name;
+  }
+}
