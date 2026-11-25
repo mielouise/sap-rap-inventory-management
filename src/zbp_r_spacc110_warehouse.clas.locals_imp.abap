@@ -29,10 +29,13 @@ CLASS lhc_warehouse IMPLEMENTATION.
         %state_area = 'WAREHOUSE_NAME'
       ) TO reported-Warehouse.
 
+      DATA(lv_warehouse_name_normalized) =
+        to_upper( ls_warehouse-WarehouseName ).
+
       SELECT SINGLE warehouse_id
         FROM zspacc110_ware
-        WHERE warehouse_name = @ls_warehouse-WarehouseName
-          AND warehouse_id   <> @ls_warehouse-WarehouseId
+        WHERE upper( warehouse_name ) = @lv_warehouse_name_normalized
+          AND warehouse_id <> @ls_warehouse-WarehouseId
         INTO @DATA(lv_existing_warehouse).
 
       IF sy-subrc = 0.
