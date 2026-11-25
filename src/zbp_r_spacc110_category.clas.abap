@@ -1,12 +1,4 @@
-class ZBP_R_SPACC110_CATEGORY definition
-  public
-  abstract
-  final
-  create public .
-
-public section.
-protected section.
-private section.
+CLASS zbp_r_spacc110_category DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zr_spacc110_category.
 ENDCLASS.
 
 

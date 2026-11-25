@@ -1,0 +1,19 @@
+@Metadata.layer: #CORE
+
+annotate view ZC_SPACC110_CATEGORY with
+{
+  @UI.facet: [{
+    id: 'General',
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'Category Details',
+    position: 10
+  }]
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  CategoryId;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  CategoryName;
+}

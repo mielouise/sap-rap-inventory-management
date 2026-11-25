@@ -6,5 +6,6 @@ define root view entity ZC_SPACC110_CATEGORY
   as projection on ZR_SPACC110_CATEGORY
 {
   key CategoryId,
-      CategoryName
+      CategoryName,
+      LastChangedAt
 }
