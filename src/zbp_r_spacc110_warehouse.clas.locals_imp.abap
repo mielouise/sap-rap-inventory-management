@@ -1,11 +1,64 @@
+CLASS lhc_warehouse DEFINITION
+  INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+    METHODS validateWarehouseName
+      FOR VALIDATE ON SAVE
+      IMPORTING keys FOR Warehouse~validateWarehouseName.
+ENDCLASS.
+
 CLASS lsc_ZR_SPACC110_WAREHOUSE DEFINITION
   INHERITING FROM cl_abap_behavior_saver.
-
   PROTECTED SECTION.
-
     METHODS adjust_numbers REDEFINITION.
+ENDCLASS.
+
+CLASS lhc_warehouse IMPLEMENTATION.
+
+  METHOD validateWarehouseName.
+
+    READ ENTITIES OF zr_spacc110_warehouse IN LOCAL MODE
+      ENTITY Warehouse
+      FIELDS ( WarehouseId WarehouseName )
+      WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_warehouses).
+
+    LOOP AT lt_warehouses INTO DATA(ls_warehouse).
+
+      APPEND VALUE #(
+        %tky        = ls_warehouse-%tky
+        %state_area = 'WAREHOUSE_NAME'
+      ) TO reported-Warehouse.
+
+      SELECT SINGLE warehouse_id
+        FROM zspacc110_ware
+        WHERE warehouse_name = @ls_warehouse-WarehouseName
+          AND warehouse_id   <> @ls_warehouse-WarehouseId
+        INTO @DATA(lv_existing_warehouse).
+
+      IF sy-subrc = 0.
+
+        APPEND VALUE #(
+          %tky = ls_warehouse-%tky
+        ) TO failed-Warehouse.
+
+        APPEND VALUE #(
+          %tky        = ls_warehouse-%tky
+          %state_area = 'WAREHOUSE_NAME'
+          %msg        = new_message_with_text(
+                           severity = if_abap_behv_message=>severity-error
+                           text     = 'A warehouse with this name already exists.'
+                         )
+          %element-WarehouseName = if_abap_behv=>mk-on
+        ) TO reported-Warehouse.
+
+      ENDIF.
+
+    ENDLOOP.
+
+  ENDMETHOD.
 
 ENDCLASS.
+
 
 
 CLASS lsc_ZR_SPACC110_WAREHOUSE IMPLEMENTATION.
