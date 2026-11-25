@@ -30,8 +30,10 @@ etag master LocalLastChangedAt
     LocalLastChangedAt,
     LastChangedAt;
 
+  field ( mandatory )
+    ProductName;
+
   field ( mandatory : create )
-    ProductName,
     Category;
 
 
