@@ -1,7 +1,7 @@
+@ObjectModel.dataCategory: #VALUE_HELP
 @EndUserText.label: 'Category Value Help'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @Search.searchable: true
-
 define view entity ZI_SPACC110_CATEGORY
   as select from zspacc110_categ
 {

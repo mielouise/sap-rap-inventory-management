@@ -34,6 +34,13 @@ annotate view ZC_SPACC110_PRODUCT with
   @UI.fieldGroup: [{ qualifier: 'General', position: 20 }]
   ProductDescription;
 
+  @EndUserText.label: 'Product Category'
+  @Consumption.valueHelpDefinition: [{
+    entity: {
+      name: 'ZI_SPACC110_CATEGORY',
+      element: 'Category'
+    }
+  }]
   @UI.lineItem: [{ position: 40 }]
   @UI.identification: [{ position: 40 }]
   @UI.fieldGroup: [{ qualifier: 'General', position: 30 }]

@@ -2,4 +2,5 @@
 define service ZSD_SPACC110_PRODUCT {
   expose ZC_SPACC110_PRODUCT   as Products;
   expose ZC_SPACC110_WAREHOUSE as Warehouses;
+  expose ZI_SPACC110_CATEGORY  as CategoryValueHelp;
 }
