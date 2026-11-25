@@ -1,0 +1,42 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+  typeName: 'Product',
+  typeNamePlural: 'Products',
+  title: {
+    value: 'ProductName'
+  }
+}
+
+annotate view ZC_SPACC110_PRODUCT with
+{
+  @UI.facet: [
+    {
+      type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'General',
+      label: 'General Information',
+      position: 10
+    }
+  ]
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  ProductId;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 10 }]
+  @UI.selectionField: [{ position: 10 }]
+  ProductName;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 20 }]
+  ProductDescription;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 30 }]
+  @UI.selectionField: [{ position: 20 }]
+  Category;
+}

@@ -1,4 +1,3 @@
-
 CLASS lhc_product DEFINITION
   INHERITING FROM cl_abap_behavior_handler.
 
@@ -10,38 +9,44 @@ CLASS lhc_product DEFINITION
 
 ENDCLASS.
 
-
 CLASS lhc_product IMPLEMENTATION.
 
-  METHOD validateProductName.
-
-    READ ENTITIES OF ZR_SPACC110_PRODUCT IN LOCAL MODE
+  METHOD validateproductname.
+    READ ENTITIES OF zr_spacc110_product IN LOCAL MODE
       ENTITY Product
-      FIELDS ( ProductName )
+      FIELDS ( ProductId ProductName )
       WITH CORRESPONDING #( keys )
-      RESULT DATA(products).
+      RESULT DATA(lt_product).
 
-    LOOP AT products INTO DATA(product).
+    LOOP AT lt_product INTO DATA(ls_product).
 
-      DATA(lv_name) = product-ProductName.
+      APPEND VALUE #(
+        %tky        = ls_product-%tky
+        %state_area = 'PRODUCT_NAME'
+      ) TO reported-Product.
 
-      CONDENSE lv_name.
+      SELECT SINGLE
+        FROM zspacc110_produc
+        FIELDS product_id
+        WHERE product_name = @ls_product-ProductName
+          AND product_id   <> @ls_product-ProductId
+        INTO @DATA(lv_existing_product).
 
-      IF lv_name IS INITIAL
-         OR lv_name NA 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÆØÅæøå'.
+      IF sy-subrc = 0.
 
         APPEND VALUE #(
-          %tky = product-%tky
-        ) TO failed-product.
+          %tky = ls_product-%tky
+        ) TO failed-Product.
 
         APPEND VALUE #(
-          %tky = product-%tky
-          %msg = new_message_with_text(
+          %tky        = ls_product-%tky
+          %state_area = 'PRODUCT_NAME'
+          %msg        = new_message_with_text(
             severity = if_abap_behv_message=>severity-error
-            text = 'Product name must contain at least one letter.'
+            text     = 'A product with this name already exists.'
           )
           %element-ProductName = if_abap_behv=>mk-on
-        ) TO reported-product.
+        ) TO reported-Product.
 
       ENDIF.
 
@@ -60,7 +65,6 @@ CLASS lsc_zr_spacc110_product DEFINITION
     METHODS adjust_numbers REDEFINITION.
 
 ENDCLASS.
-
 
 CLASS lsc_zr_spacc110_product IMPLEMENTATION.
 
@@ -87,14 +91,6 @@ CLASS lsc_zr_spacc110_product IMPLEMENTATION.
 
       ENDTRY.
 
-      ASSERT lv_quantity = 1.
-      ASSERT lv_number IS NOT INITIAL.
-      ASSERT lv_returncode <> '2'
-         AND lv_returncode <> '3'.
-
-      ASSERT CONV decfloat34( lv_number ) > 0.
-      ASSERT CONV decfloat34( lv_number ) <= 2147483647.
-
       <product>-%key-ProductId = CONV i( lv_number ).
 
     ENDLOOP.
@@ -102,4 +98,3 @@ CLASS lsc_zr_spacc110_product IMPLEMENTATION.
   ENDMETHOD.
 
 ENDCLASS.
-

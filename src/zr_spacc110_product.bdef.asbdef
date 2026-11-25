@@ -31,7 +31,9 @@ etag master LocalLastChangedAt
     LastChangedAt;
 
   field ( mandatory : create )
-    ProductName;
+    ProductName,
+    Category;
+
 
   draft action Edit;
   draft action Activate optimized;

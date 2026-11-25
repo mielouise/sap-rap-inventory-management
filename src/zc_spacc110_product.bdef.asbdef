@@ -1,5 +1,4 @@
 projection;
-
 strict ( 2 );
 
 use draft;
