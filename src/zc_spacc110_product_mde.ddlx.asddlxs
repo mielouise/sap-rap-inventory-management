@@ -1,3 +1,4 @@
+
 @Metadata.layer: #CORE
 
 @UI.headerInfo: {
@@ -5,40 +6,116 @@
   typeNamePlural: 'Products',
   title: {
     value: 'ProductName'
+  },
+  description: {
+    value: 'ProductID'
   }
 }
 
 annotate view ZC_SPACC110_PRODUCT with
 {
-  @UI.facet: [{
-    id: 'General',
-    type: #IDENTIFICATION_REFERENCE,
-    label: 'General Information',
-    position: 10
-  }]
+  @UI.facet: [
+    {
+      id: 'GeneralInfo',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'General Information',
+      position: 10
+    },
+    {
+      id: 'ProductDetails',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'Details',
+      label: 'Product Details',
+      position: 20
+    }
+  ]
 
-  @UI.lineItem: [{ position: 10 }]
-  @UI.identification: [{ position: 30 }]
+  // PRODUCT ID
+  @EndUserText.label: 'Product ID'
+  @UI.lineItem: [
+    {
+      position: 10,
+      label: 'Product ID',
+      importance: #MEDIUM
+    }
+  ]
+  @UI.identification: [
+    {
+      position: 10,
+      label: 'Product ID'
+    }
+  ]
   ProductId;
 
-  @UI.lineItem: [{ position: 20 }]
-  @UI.identification: [{ position: 10 }]
-  @UI.selectionField: [{ position: 10 }]
+  // PRODUCT NAME
+  @EndUserText.label: 'Product Name'
+  @UI.lineItem: [
+    {
+      position: 20,
+      label: 'Product Name',
+      importance: #HIGH
+    }
+  ]
+  @UI.identification: [
+    {
+      position: 20,
+      label: 'Product Name'
+    }
+  ]
+  @UI.selectionField: [
+    {
+      position: 10
+    }
+  ]
   ProductName;
 
-  @UI.lineItem: [{ position: 30 }]
-  @UI.identification: [{ position: 40 }]
+  // PRODUCT DESCRIPTION
+  @EndUserText.label: 'Description'
+  @UI.fieldGroup: [
+    {
+      qualifier: 'Details',
+      position: 10,
+      label: 'Description'
+    }
+  ]
+  @UI.lineItem: [
+    {
+      position: 30,
+      label: 'Description',
+      importance: #MEDIUM
+    }
+  ]
   ProductDescription;
 
+  // PRODUCT CATEGORY
   @EndUserText.label: 'Product Category'
-  @Consumption.valueHelpDefinition: [{
-    entity: {
-      name: 'ZI_SPACC110_CATEGORY',
-      element: 'Category'
+  @Consumption.valueHelpDefinition: [
+    {
+      entity: {
+        name: 'ZI_SPACC110_CATEGORY',
+        element: 'Category'
+      }
     }
-  }]
-  @UI.lineItem: [{ position: 40 }]
-  @UI.identification: [{ position: 20 }]
-  @UI.selectionField: [{ position: 20 }]
+  ]
+  @UI.lineItem: [
+    {
+      position: 40,
+      label: 'Category',
+      importance: #HIGH
+    }
+  ]
+  @UI.identification: [
+    {
+      position: 30,
+      label: 'Product Category'
+    }
+  ]
+  @UI.selectionField: [
+    {
+      position: 20
+    }
+  ]
   Category;
 }
